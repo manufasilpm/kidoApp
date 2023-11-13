@@ -34,4 +34,13 @@ public class ParentService {
             return null;
         }
     }
+
+
+    public Parent getParentById(Long id) {
+        return parentRepository.findById(id).orElse(null);
+    }
+
+    public void deleteParent(Long id) {
+        parentRepository.deleteById(id);
+    }
 }

@@ -32,4 +32,7 @@ public class Parent {
     public String phone_no;
 
 
+    public void setId(Long id) {
+        this.parent_id=id;
+    }
 }

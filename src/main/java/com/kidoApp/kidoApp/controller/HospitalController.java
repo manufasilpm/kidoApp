@@ -7,10 +7,7 @@ import com.kidoApp.kidoApp.services.ParentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("Hospital")
@@ -27,4 +24,38 @@ public class HospitalController {
         // Return a ResponseEntity with the created child and an HTTP status code
         return new ResponseEntity<>(savedHospital, HttpStatus.CREATED);
     }
+    @GetMapping("/getHospital/{id}")
+    public ResponseEntity<Hospital> getHospitalById(@PathVariable Long id) {
+        Hospital hospital = hospitalService.getHospitalById(id);
+        if (hospital != null) {
+            return new ResponseEntity<>(hospital, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PutMapping("/updateHospital/{id}")
+    public ResponseEntity<Hospital> updateHospital(@PathVariable Long id, @RequestBody Hospital updatedHospital) {
+        Hospital existingHospital = hospitalService.getHospitalById(id);
+
+        if (existingHospital != null) {
+
+            Hospital savedHospital = hospitalService.createHospital(updatedHospital);
+            return new ResponseEntity<>(savedHospital, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+    @DeleteMapping("/deleteHospital/{id}")
+    public ResponseEntity<Void> deleteHospital(@PathVariable Long id) {
+        Hospital existingHospital = hospitalService.getHospitalById(id);
+
+        if (existingHospital != null) {
+            hospitalService.deleteHospital(id);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
 }
