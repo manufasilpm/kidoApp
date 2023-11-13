@@ -1,13 +1,16 @@
 package com.kidoApp.kidoApp.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Data
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 public class Hospital {
 
     @Id
@@ -24,26 +27,14 @@ public class Hospital {
     @Column(name = "phone_no")
     public String phone_no;
 
-    @Column(name = "s_mon")
-    public String s_mon;
 
-    @Column(name = "s_tue")
-    public String s_tue;
-
-
-    @Column(name = "s_wed")
-    public  String s_wed;
-    @Column(name = "s_thurs")
-    public  String s_thurs;
-    @Column(name = "s_fri")
-    public  String s_fri;
-    @Column(name = "s_sat")
-    public  String s_sat;
-    @Column(name = "s_sun")
-    public  String s_sun;
     @Column(name = "password")
     public   String password;
 
-    public Hospital(){}
+    @OneToMany(targetEntity = Vaccine.class,cascade = CascadeType.ALL)
+    @JoinColumn(name = "Vaccince_fk",referencedColumnName ="hospital_id" )
+    private List<Vaccine> vaccine;
+
+
 
 }

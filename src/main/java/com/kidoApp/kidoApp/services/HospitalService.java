@@ -13,9 +13,13 @@ public class HospitalService {
     HospitalRepository hospitalRepository;
     public Hospital createHospital(Hospital hospital) {
         Hospital savedHospital = hospitalRepository.save(hospital);
-
         return savedHospital;
+    }
+    public Hospital getHospitalById(Long id) {
+        return hospitalRepository.findById(id).orElse(null);
+    }
 
-
+    public void deleteHospital(Long id) {
+        hospitalRepository.deleteById(id);
     }
 }

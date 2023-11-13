@@ -19,4 +19,11 @@ public class VaccineService {
 
 
     }
+    public Vaccine getVaccineById(Long id) {
+        return vaccineRepository.findById(id).orElse(null);
+    }
+
+    public void deleteVaccine(Long id) {
+        vaccineRepository.deleteById(id);
+    }
 }

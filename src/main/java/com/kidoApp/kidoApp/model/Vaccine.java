@@ -28,4 +28,6 @@ public class Vaccine {
     public String description;
 
 
+    public void setId(Long id) {
+        this.vaccine_id=id;}
 }

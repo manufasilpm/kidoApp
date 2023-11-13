@@ -8,10 +8,7 @@ import com.kidoApp.kidoApp.services.VaccineService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("vaccine")
@@ -30,5 +27,29 @@ public class VaccineController {
 
 
         return new ResponseEntity<>(savedVaccine, HttpStatus.CREATED);
+    }
+
+    @PutMapping("/updateVaccine/{id}")
+    public ResponseEntity<Vaccine> updateVaccine(@PathVariable Long id, @RequestBody Vaccine updatedVaccine) {
+        Vaccine existingVaccine = vaccineService.getVaccineById(id);
+
+        if (existingVaccine != null) {
+            updatedVaccine.setId(id);
+            Vaccine savedVaccine = vaccineService.createVaccine(updatedVaccine);
+            return new ResponseEntity<>(savedVaccine, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+    @DeleteMapping("/deleteVaccine/{id}")
+    public ResponseEntity<Void> deleteVaccine(@PathVariable Long id) {
+        Vaccine existingVaccine = vaccineService.getVaccineById(id);
+
+        if (existingVaccine != null) {
+            vaccineService.deleteVaccine(id);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 }
