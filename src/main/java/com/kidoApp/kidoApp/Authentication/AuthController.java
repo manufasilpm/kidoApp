@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.sql.DriverManager;
+
 @RestController
 public class AuthController {
     private final AuthService authService;
@@ -40,7 +42,7 @@ public class AuthController {
         try {
             String phoneNumber = loginRequest.getPhoneNumber();
             String password = loginRequest.getPassword();
-
+            System.out.println(phoneNumber);
             Parent parent = authService.validateCredentials(phoneNumber, password);
 
             if (parent != null) {
