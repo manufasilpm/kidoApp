@@ -1,18 +1,14 @@
 //package com.kidoApp.kidoApp.model;
 //
-//import jakarta.persistence.Column;
-//import jakarta.persistence.Id;
+//import jakarta.persistence.*;
 //import lombok.Data;
-//
-//import jakarta.persistence.Entity;
-//import jakarta.persistence.GeneratedValue;
 //
 //@Data
 //@Entity
 //public class User {
 //
 //    @Id
-//    @GeneratedValue
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
 //    @Column(name = "user_id")
 //    private  Long UserId;
 //

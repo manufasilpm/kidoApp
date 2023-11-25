@@ -19,17 +19,17 @@ public class Hospital {
     private  Long hospital_id;
 
     @Column(name = "hospital_name")
-    public String hospital_name;
+    private String hospitalName;
 
     @Column(name = "location")
-    public String location;
+    private String location;
 
     @Column(name = "phone_no")
-    public String phone_no;
+    private String phoneNo;
 
 
     @Column(name = "password")
-    public   String password;
+    private   String password;
 
     @OneToMany(targetEntity = Vaccine.class,cascade = CascadeType.ALL)
     @JoinColumn(name = "Vaccince_fk",referencedColumnName ="hospital_id" )

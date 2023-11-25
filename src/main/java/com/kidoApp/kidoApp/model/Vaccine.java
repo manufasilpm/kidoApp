@@ -1,10 +1,9 @@
 package com.kidoApp.kidoApp.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
+
+import java.util.List;
 
 @Data
 @Entity
@@ -13,13 +12,13 @@ public class Vaccine {
     @Id
     @GeneratedValue
     @Column(name = "vaccine_id")
-    public  Long vaccine_id;
+    public  Long vaccineId;
 
     @Column(name = "vaccine_name")
-    public String vaccine_name;
+    public String vaccineName;
 
     @Column(name = "vaccine_category")
-    public String vaccine_category;
+    public String vaccineCategory;
 
     @Column(name = "company")
     public String company;
@@ -27,7 +26,9 @@ public class Vaccine {
     @Column(name = "description")
     public String description;
 
+//    @OneToMany(mappedBy = "vaccine", cascade = CascadeType.ALL)
+//    private List<Appointment> appointments;
 
-    public void setId(Long id) {
-        this.vaccine_id=id;}
+
+
 }
