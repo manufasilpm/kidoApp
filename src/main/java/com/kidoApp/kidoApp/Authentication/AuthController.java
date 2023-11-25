@@ -48,7 +48,7 @@ public class AuthController {
                 System.out.println(password + ": " + loginRequest.getPassword());
 
                 // Include parent ID in the response
-                String responseJson = String.format("{\"message\": \"Login successful\", \"parentId\": %d}", parent.getParent_id());
+                String responseJson = String.format("{\"message\": \"Login successful\", \"parentId\": %d}", parent.getParentId());
 
                 return ResponseEntity.ok(responseJson);
             } else {

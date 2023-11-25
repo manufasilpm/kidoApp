@@ -1,12 +1,14 @@
 package com.kidoApp.kidoApp.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Data
 @Entity
@@ -17,23 +19,37 @@ public class Child {
     @Id
     @GeneratedValue
     @Column(name = "child_id")
-    public  Long child_id;
+    private Long childId;
 
     @Column(name = "child_name")
-    public String child_name;
+    private String childName;
 
     @Column(name = "gender")
-    public String gender;
+    private String gender;
 
     @Column(name = "dob")
-    public String dob;
+    private String dob;
 
     @Column(name = "latest_vaccine")
-    public String latest_vaccine;
+    private String latest_vaccine;
     @Column(name = "completed_vaccine")
-    public String completed_vaccine;
+    private String completed_vaccine;
 
-    @Column(name = "parent_id")
-    public String parent_id;
+
+    @ManyToOne
+    @JoinColumn(name = "parent_id")
+    @JsonBackReference
+    private Parent parent;
+
+
+    @JsonManagedReference
+    @OneToOne
+    @JoinColumn(name = "appoiment_id")
+    private Appointment appointment;
+
+
+
+
+
 
 }

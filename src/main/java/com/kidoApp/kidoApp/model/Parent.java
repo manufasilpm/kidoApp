@@ -1,12 +1,14 @@
 package com.kidoApp.kidoApp.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Entity
@@ -17,22 +19,24 @@ public class Parent {
     @Id
     @GeneratedValue
     @Column(name = "parent_id")
-    public  Long parent_id;
+    private  Long parentId;
 
     @Column(name = "parent_name")
-    public String parent_name;
+    private String parentName;
 
     @Column(name = "password")
-    public String password;
+    private String password;
 
     @Column(name = "address")
-    public String address;
+    private String address;
 
     @Column(name = "phone_no")
-    public String phone_no;
+    private String phoneNo;
+
+    @OneToMany(mappedBy = "parent",cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<Child> children;
 
 
-    public void setId(Long id) {
-        this.parent_id=id;
-    }
+
 }

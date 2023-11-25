@@ -18,7 +18,7 @@ public class AuthService {
     }
 
     public Parent validateCredentials(String phoneNumber, String password) {
-        Parent parent = parentRepository.findByPhoneNumber(phoneNumber);
+        Parent parent = parentRepository.findByPhoneNoContaining(phoneNumber);
 
         if (parent == null || !parent.getPassword().equals(password)) {
             throw new InvalidCredentialsException("Invalid username or password");

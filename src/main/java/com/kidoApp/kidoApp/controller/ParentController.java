@@ -1,77 +1,108 @@
 package com.kidoApp.kidoApp.controller;
 
 import com.kidoApp.kidoApp.Exception.PhoneNumberAlreadyExistsException;
+import com.kidoApp.kidoApp.dto.ChildDTO;
+import com.kidoApp.kidoApp.dto.ParentDTO;
+import com.kidoApp.kidoApp.dto.ParentRequestDTO;
 import com.kidoApp.kidoApp.model.Child;
 import com.kidoApp.kidoApp.model.Parent;
 import com.kidoApp.kidoApp.services.ParentService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("parent")
 public class ParentController {
 
     @Autowired
-    ParentService parentService;
+    private ParentService parentService;
 
-
-    @PostMapping("saveParent")
-    public ResponseEntity createParent(@RequestBody Parent parent) {
+    @PostMapping("/add")
+    public ResponseEntity<Map<String, String>> addParent(@RequestBody ParentRequestDTO parentRequest) {
         try {
-            Parent savedParent = parentService.createParent(parent);
-            return new ResponseEntity<>(savedParent, HttpStatus.CREATED);
-        } catch (PhoneNumberAlreadyExistsException ex) {
-            return new ResponseEntity<>(ex.getMessage(), HttpStatus.CONFLICT);
+            parentService.addParent(parentRequest);
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "Parent added successfully.");
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Collections.singletonMap("error", "Error adding parent."));
         }
     }
 
-    @GetMapping("/parent_id/{phoneNumber}")
-    public String getParentIdByPhoneNumber(@PathVariable String phoneNumber) {
-        return parentService.getParentIdByPhoneNumber(phoneNumber);
-    }
-
-    @PutMapping("/updateParent/{id}")
-    public ResponseEntity<?> updateParent(@PathVariable Long id, @RequestBody Parent updatedParent) {
+    @PutMapping("/update/{parentId}")
+    public ResponseEntity<?> updateParent(@PathVariable Long parentId, @RequestBody ParentRequestDTO parentRequest) {
         try {
-            Parent existingParent = parentService.getParentById(id);
-
-            if (existingParent != null) {
-                updatedParent.setId(id);
-                Parent savedParent = parentService.createParent(updatedParent);
-                return new ResponseEntity<>(savedParent, HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>("Parent not found", HttpStatus.NOT_FOUND);
-            }
-        } catch (PhoneNumberAlreadyExistsException ex) {
-            return new ResponseEntity<>(ex.getMessage(), HttpStatus.CONFLICT);
-        } catch (Exception ex) {
-            return new ResponseEntity<>("Internal Server Error", HttpStatus.INTERNAL_SERVER_ERROR);
+            parentService.updateParent(parentId, parentRequest);
+            return ResponseEntity.ok().body("Parent updated successfully.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error updating parent.");
         }
     }
-    @GetMapping("/getParent/{id}")
-    public ResponseEntity<Parent> getParentById(@PathVariable Long id) {
-        Parent parent = parentService.getParentById(id);
 
+    @GetMapping("/{parentId}")
+    public ResponseEntity<?> getParent(@PathVariable Long parentId) {
+        try {
+            ParentDTO parentDTO = parentService.getParent(parentId);
+            return ResponseEntity.ok().body(parentDTO);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Parent not found.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error retrieving parent.");
+        }
+    }
+
+    @DeleteMapping("/delete/{parentId}")
+    public ResponseEntity<?> deleteParent(@PathVariable Long parentId) {
+        try {
+            parentService.deleteParent(parentId);
+            return ResponseEntity.ok().body("Parent deleted successfully.");
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Parent not found.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error deleting parent.");
+        }
+    }
+
+    @GetMapping("/{parentId}/children")
+    public ResponseEntity<?> getChildrenByParentId(@PathVariable Long parentId) {
+        try {
+            List<ChildDTO> children = parentService.getChildrenByParentId(parentId);
+            return ResponseEntity.ok().body(children);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Parent not found.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error retrieving children.");
+        }
+    }
+    @GetMapping("/getIdByPhone/{phoneNo}")
+    public ResponseEntity<Long> getParentIdByPhone(@PathVariable String phoneNo) {
+        Parent parent = parentService.findByPhoneNumber(phoneNo);
         if (parent != null) {
-            return new ResponseEntity<>(parent, HttpStatus.OK);
+            return ResponseEntity.ok(parent.getParentId());
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return ResponseEntity.notFound().build();
         }
     }
-    @DeleteMapping("/deleteParent/{id}")
-    public ResponseEntity<Void> deleteParent(@PathVariable Long id) {
-        Parent existingParent = parentService.getParentById(id);
+    @GetMapping("/{parentId}/details")
+    public ResponseEntity<Parent> getParentDetails(@PathVariable Long parentId) {
+        try {
+            Parent parent = parentService.getParentDetails(parentId);
+            return ResponseEntity.ok(parent);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
 
-        if (existingParent != null) {
-            parentService.deleteParent(id);
-            return new ResponseEntity<>(HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
+
+
+
 }
 

@@ -25,6 +25,6 @@ public class AvailabilitySlot {
     public void setId(Long id) {
     }
 
-    // Other fields, getters, setters, etc.
+
 }
 
