@@ -14,7 +14,7 @@ public class HospitalDTO {
 
 
     public HospitalDTO(Hospital hospital) {
-        this.id = hospital.getHospital_id();
+        this.id = hospital.getHospitalId();
         this.name = hospital.getHospitalName();
         this.address = hospital.getLocation();
         this.phoneNumber = hospital.getPhoneNo();

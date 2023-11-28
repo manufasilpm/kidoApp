@@ -26,7 +26,8 @@ public class ChildController {
             childService.addChild(parentId, childRequest);
             return ResponseEntity.ok().body("{\"message\": \"Child added successfully.\"}");
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("{\"error\": \"Error adding child.\"}");
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("{\"error\": "+e.getMessage()+"}");
         }
     }
 

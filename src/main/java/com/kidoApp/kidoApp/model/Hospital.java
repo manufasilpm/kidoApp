@@ -16,7 +16,7 @@ public class Hospital {
     @Id
     @GeneratedValue
     @Column(name = "hospital_id")
-    private  Long hospital_id;
+    private  Long hospitalId;
 
     @Column(name = "hospital_name")
     private String hospitalName;

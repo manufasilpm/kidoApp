@@ -13,7 +13,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("vaccine")
@@ -28,7 +30,9 @@ public class VaccineController {
     public ResponseEntity<?> addVaccine(@RequestBody VaccineRequestDTO vaccineRequest) {
         try {
             vaccineService.addVaccine(vaccineRequest);
-            return ResponseEntity.ok().body("Vaccine added successfully.");
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "Vaccine added successfully.");
+            return ResponseEntity.ok(response);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error adding vaccine.");
         }
@@ -38,7 +42,9 @@ public class VaccineController {
     public ResponseEntity<?> updateVaccine(@PathVariable Long vaccineId, @RequestBody VaccineRequestDTO vaccineRequest) {
         try {
             vaccineService.updateVaccine(vaccineId, vaccineRequest);
-            return ResponseEntity.ok().body("Vaccine updated successfully.");
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "Vaccine updated successfully.");
+            return ResponseEntity.ok(response);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error updating vaccine.");
         }
@@ -60,7 +66,9 @@ public class VaccineController {
     public ResponseEntity<?> deleteVaccine(@PathVariable Long vaccineId) {
         try {
             vaccineService.deleteVaccine(vaccineId);
-            return ResponseEntity.ok().body("Vaccine deleted successfully.");
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "Vaccine deleted successfully.");
+            return ResponseEntity.ok(response);
         } catch (EntityNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Vaccine not found.");
         } catch (Exception e) {
