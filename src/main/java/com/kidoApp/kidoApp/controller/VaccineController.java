@@ -27,7 +27,7 @@ public class VaccineController {
     private VaccineService vaccineService;
 
     @PostMapping("/add")
-    public ResponseEntity<?> addVaccine(@RequestBody VaccineRequestDTO vaccineRequest) {
+    public ResponseEntity<?> addVaccine(@RequestBody Vaccine vaccineRequest) {
         try {
             vaccineService.addVaccine(vaccineRequest);
             Map<String, String> response = new HashMap<>();
@@ -88,9 +88,3 @@ public class VaccineController {
         }
     }
 }
-//try {
-//        List<HospitalDTO> hospitals = hospitalService.getAllHospitals();
-//        return ResponseEntity.ok().body(hospitals);
-//        } catch (Exception e) {
-//        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error retrieving hospitals.");
-//        }

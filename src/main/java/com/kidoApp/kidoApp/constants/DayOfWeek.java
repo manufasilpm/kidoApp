@@ -1,4 +1,4 @@
-package com.kidoApp.kidoApp.controller;
+package com.kidoApp.kidoApp.constants;
 
 
 import jakarta.persistence.Enumerated;

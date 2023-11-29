@@ -24,20 +24,7 @@ public class AuthController {
         this.authService = authService;
     }
 
-//    @PostMapping("/auth/login")
-//    public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest) {
-//        String phoneNumber = loginRequest.getPhoneNumber();
-//        String password = loginRequest.getPassword();
-//
-//        if (authService.validateCredentials(phoneNumber,password)) {
-//            System.out.println(phoneNumber + ": "+ loginRequest.getPhoneNumber());
-//            System.out.println(password + ": "+ loginRequest.getPassword());
-//
-//            return new ResponseEntity<String>("Login successful", HttpStatus.OK);
-//        } else {
-//            return new ResponseEntity<>("Invalid username or password", HttpStatus.UNAUTHORIZED);
-//        }
-//    }
+
     @PostMapping(value = "/auth/login")
     public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest) {
         try {

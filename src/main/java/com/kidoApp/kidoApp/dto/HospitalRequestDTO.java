@@ -4,10 +4,8 @@ import lombok.Data;
 
 @Data
 public class HospitalRequestDTO {
-    private String name;
+    private String hospitalName;
     private String address;
-    private String phoneNumber;
+    private String phoneNo;
     private String password;
-    // Add other fields as needed
-    // Constructors, getters, setters
 }

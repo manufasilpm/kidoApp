@@ -1,12 +1,16 @@
 package com.kidoApp.kidoApp.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Data
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 public class Vaccine {
 
     @Id
@@ -31,8 +35,6 @@ public class Vaccine {
     @Column(name = "status")
     public String status;
 
-//    @OneToMany(mappedBy = "vaccine", cascade = CascadeType.ALL)
-//    private List<Appointment> appointments;
 
 
 

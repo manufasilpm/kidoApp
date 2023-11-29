@@ -4,9 +4,7 @@ package com.kidoApp.kidoApp.services;
 import com.kidoApp.kidoApp.Exception.VaccineNameExistsException;
 import com.kidoApp.kidoApp.dto.VaccineDTO;
 import com.kidoApp.kidoApp.dto.VaccineRequestDTO;
-import com.kidoApp.kidoApp.model.Hospital;
 import com.kidoApp.kidoApp.model.Vaccine;
-import com.kidoApp.kidoApp.repository.HospitalRepository;
 import com.kidoApp.kidoApp.repository.VaccineRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +17,7 @@ public class VaccineService {
     @Autowired
     private VaccineRepository vaccineRepository;
 
-    public void addVaccine(VaccineRequestDTO vaccineRequest) {
+    public void addVaccine(Vaccine vaccineRequest) {
         // Check if a vaccine with the same name already exists
         if (vaccineRepository.existsByVaccineName(vaccineRequest.getVaccineName())) {
             throw new VaccineNameExistsException("Vaccine with the same name already exists.");

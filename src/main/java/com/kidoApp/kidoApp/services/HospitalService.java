@@ -1,17 +1,20 @@
 package com.kidoApp.kidoApp.services;
 
-import com.kidoApp.kidoApp.Exception.ChildAlreadyExistsException;
 import com.kidoApp.kidoApp.Exception.HospitalPhoneNumberExistsException;
-import com.kidoApp.kidoApp.Exception.PhoneNumberAlreadyExistsException;
+import com.kidoApp.kidoApp.constants.DayOfWeek;
 import com.kidoApp.kidoApp.dto.HospitalDTO;
 import com.kidoApp.kidoApp.dto.HospitalRequestDTO;
+import com.kidoApp.kidoApp.dto.SlotRequestDTO;
 import com.kidoApp.kidoApp.model.Hospital;
-import com.kidoApp.kidoApp.model.Parent;
+import com.kidoApp.kidoApp.model.VaccinationSlot;
 import com.kidoApp.kidoApp.repository.HospitalRepository;
+import com.kidoApp.kidoApp.repository.VaccinationSlotRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLOutput;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,25 +23,44 @@ public class HospitalService {
     @Autowired
     private HospitalRepository hospitalRepository;
 
+    @Autowired
+    private VaccinationSlotRepository vaccinationSlot;
+
+
+    @Autowired
+    private VaccinationSlotService vaccinationSlotService;
+
     public void addHospital(HospitalRequestDTO hospitalRequest) {
 
-        if (hospitalRepository.existsByPhoneNo(hospitalRequest.getPhoneNumber())) {
+        if (hospitalRepository.existsByPhoneNo(hospitalRequest.getPhoneNo())) {
             throw new HospitalPhoneNumberExistsException("Hospital with the same phone number already exists.");
         }
         Hospital hospital = new Hospital();
-        hospital.setHospitalName(hospitalRequest.getName());
+        hospital.setHospitalName(hospitalRequest.getHospitalName());
         hospital.setLocation(hospitalRequest.getAddress());
         hospital.setPassword(hospitalRequest.getPassword());
-        hospital.setPhoneNo(hospitalRequest.getPhoneNumber());
-        // Set other hospital properties as needed
+        hospital.setPhoneNo(hospitalRequest.getPhoneNo());
+
         hospitalRepository.save(hospital);
+        Long hospitalId = hospital.getHospitalId();
+
+        for (DayOfWeek dayOfWeek : DayOfWeek.values()) {
+
+            if (dayOfWeek != DayOfWeek.SATURDAY && dayOfWeek != DayOfWeek.SUNDAY) {
+
+                SlotRequestDTO slotRequest=new SlotRequestDTO(hospitalId,dayOfWeek.toString(),10L,"9","17");
+                vaccinationSlotService.addSlot(slotRequest);
+            }
+        }
+
+
     }
 
     public void updateHospital(Long hospitalId, HospitalRequestDTO hospitalRequest) {
         Hospital hospital = hospitalRepository.findById(hospitalId)
                 .orElseThrow(() -> new EntityNotFoundException("Hospital not found"));
 
-        hospital.setHospitalName(hospitalRequest.getName());
+        hospital.setHospitalName(hospitalRequest.getHospitalName());
         hospitalRepository.save(hospital);
     }
 
@@ -69,7 +91,7 @@ public class HospitalService {
         HospitalDTO hospitalDTO = new HospitalDTO(hospital);
         hospitalDTO.setId(hospital.getHospitalId());
         hospitalDTO.setHospitalName(hospital.getHospitalName());
-        // Set other properties if needed
+
         return hospitalDTO;
     }
 

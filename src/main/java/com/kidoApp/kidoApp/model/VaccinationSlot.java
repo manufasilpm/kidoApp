@@ -1,12 +1,13 @@
 package com.kidoApp.kidoApp.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.kidoApp.kidoApp.controller.DayOfWeek;
+import com.kidoApp.kidoApp.constants.DayOfWeek;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.time.LocalTime;
 
 
 @Data
@@ -22,15 +23,20 @@ public class VaccinationSlot {
 
     @Column(name = "slot_count")
     private Long slotCount;
+    @Column(name = "from_time")
+    private String fromTime;
+
+    @Column(name = "to_time")
+    private String toTime;
 
     @ManyToOne
     @JsonManagedReference
-    @JoinColumn(name = "hospital_id")
+    @JoinColumn(name = "hospital_id")  // Assuming this is the ID of the hospital
     private Hospital hospital;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "day_of_week")
     private DayOfWeek dayOfWeek;
 
-    // Constructors, getters, setters, and other methods
+
 }

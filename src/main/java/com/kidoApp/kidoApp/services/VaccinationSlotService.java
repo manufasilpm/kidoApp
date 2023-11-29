@@ -1,10 +1,9 @@
 package com.kidoApp.kidoApp.services;
 
-import com.kidoApp.kidoApp.controller.DayOfWeek;
+import com.kidoApp.kidoApp.constants.DayOfWeek;
 import com.kidoApp.kidoApp.dto.SlotRequestDTO;
 import com.kidoApp.kidoApp.model.Hospital;
 import com.kidoApp.kidoApp.model.VaccinationSlot;
-import com.kidoApp.kidoApp.repository.HospitalProjection;
 import com.kidoApp.kidoApp.repository.HospitalRepository;
 import com.kidoApp.kidoApp.repository.VaccinationSlotRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -29,7 +28,11 @@ public class VaccinationSlotService {
         VaccinationSlot vaccinationSlot = new VaccinationSlot();
         vaccinationSlot.setHospital(hospital);
         vaccinationSlot.setDayOfWeek(DayOfWeek.valueOf(day));
-        vaccinationSlot.setSlotCount(slotRequestDTO.getSlotCount());// Assuming 'day' is an enum value
+        vaccinationSlot.setSlotCount(slotRequestDTO.getSlotCount());
+        vaccinationSlot.setFromTime(slotRequestDTO.getFromTime());
+        vaccinationSlot.setToTime(slotRequestDTO.getToTime());// Assuming 'day' is an enum value
+
+
 
         vaccinationSlotRepository.save(vaccinationSlot);
     }
@@ -43,5 +46,15 @@ public class VaccinationSlotService {
             throw new RuntimeException("Error fetching hospitals by day", e);
         }
     }
-    // Other methods as needed
+
+    public void updateSlot(Long hospitalId, SlotRequestDTO slotRequestDTO) {
+        VaccinationSlot existingSlot = vaccinationSlotRepository.findByHospitalHospitalId(hospitalId);
+
+
+        existingSlot.setSlotCount(slotRequestDTO.getSlotCount());
+
+
+        vaccinationSlotRepository.save(existingSlot);
+    }
+
 }

@@ -2,14 +2,8 @@ package com.kidoApp.kidoApp.services;
 
 import com.kidoApp.kidoApp.dto.APIResponseDTO;
 import com.kidoApp.kidoApp.dto.AppointmentRequestDTO;
-import com.kidoApp.kidoApp.model.Appointment;
-import com.kidoApp.kidoApp.model.Child;
-import com.kidoApp.kidoApp.model.Hospital;
-import com.kidoApp.kidoApp.model.Vaccine;
-import com.kidoApp.kidoApp.repository.AppointmentRepository;
-import com.kidoApp.kidoApp.repository.ChildRepository;
-import com.kidoApp.kidoApp.repository.HospitalRepository;
-import com.kidoApp.kidoApp.repository.VaccineRepository;
+import com.kidoApp.kidoApp.model.*;
+import com.kidoApp.kidoApp.repository.*;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,6 +24,9 @@ public class AppointmentService {
     private VaccineRepository vaccineRepository;
 
     @Autowired
+    private VaccinationSlotRepository vaccinationSlotRepository;
+
+    @Autowired
     private AppointmentRepository appointmentRepository;
 
     public void addChildAppointment(Long childId, AppointmentRequestDTO appointmentRequest) {
@@ -41,8 +38,21 @@ public class AppointmentService {
         Vaccine vaccine = vaccineRepository.findById(appointmentRequest.getVaccineId())
                 .orElseThrow(() -> new EntityNotFoundException("Vaccine not found"));
 
+        VaccinationSlot vaccinationSlot=vaccinationSlotRepository.findByHospitalHospitalId(appointmentRequest.getHospitalId());
+        if (vaccinationSlot.getSlotCount() <= 0){
+            throw new RuntimeException("Slot fully occupied");
+
+        }
+
+        if (vaccinationSlot.getSlotCount() > 0) {
+            // Reduce the slot count by 1
+            vaccinationSlot.setSlotCount(vaccinationSlot.getSlotCount() - 1);
+        } else {
+            throw new RuntimeException("No available slots for vaccination.");
+        }
         Appointment appointment = new Appointment();
         appointment.setChild(child);
+
         child.setLatest_vaccine(appointmentRequest.getAppointmentDate());
         appointment.setHospital(hospital);
         appointment.setVaccine(vaccine);
