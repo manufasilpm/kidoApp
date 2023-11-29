@@ -1,8 +1,5 @@
 package com.kidoApp.kidoApp.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -38,16 +35,13 @@ public class Child {
 
     @ManyToOne
     @JoinColumn(name = "parent_id")
-    @JsonBackReference
     private Parent parent;
 
 
-    @JsonManagedReference
+
     @OneToOne
     @JoinColumn(name = "appoiment_id")
     private Appointment appointment;
-
-
 
 
 

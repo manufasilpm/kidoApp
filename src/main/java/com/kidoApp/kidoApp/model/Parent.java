@@ -1,6 +1,7 @@
 package com.kidoApp.kidoApp.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -14,12 +15,13 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+//@JsonIgnoreProperties("children")
 public class Parent {
 
     @Id
     @GeneratedValue
     @Column(name = "parent_id")
-    private  Long parentId;
+    private Long parentId;
 
     @Column(name = "parent_name")
     private String parentName;
@@ -33,10 +35,7 @@ public class Parent {
     @Column(name = "phone_no")
     private String phoneNo;
 
-    @OneToMany(mappedBy = "parent",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<Child> children;
-
-
-
 }

@@ -1,5 +1,7 @@
 package com.kidoApp.kidoApp.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,7 +18,7 @@ public class Hospital {
     @Id
     @GeneratedValue
     @Column(name = "hospital_id")
-    private  Long hospital_id;
+    private  Long hospitalId;
 
     @Column(name = "hospital_name")
     private String hospitalName;
@@ -31,10 +33,23 @@ public class Hospital {
     @Column(name = "password")
     private   String password;
 
-    @OneToMany(targetEntity = Vaccine.class,cascade = CascadeType.ALL)
-    @JoinColumn(name = "Vaccince_fk",referencedColumnName ="hospital_id" )
+    @OneToMany(mappedBy = "hospital", cascade = CascadeType.ALL)
+   @JsonBackReference
+    private List<VaccinationSlot> vaccinationSlots;
+
+    @OneToMany(targetEntity = Vaccine.class, cascade = CascadeType.ALL)
+    @JsonManagedReference
+    @JoinColumn(name = "Vaccine_fk", referencedColumnName = "hospital_id")
     private List<Vaccine> vaccine;
-
-
+    @Override
+    public String toString() {
+        return "Hospital{" +
+                "hospitalId=" + hospitalId +
+                ", hospitalName='" + hospitalName + '\'' +
+                ", location='" + location + '\'' +
+                ", phoneNo='" + phoneNo + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
 
 }

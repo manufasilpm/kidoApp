@@ -51,6 +51,10 @@ public class ChildController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error retrieving child.");
         }
     }
+    @GetMapping("/count")
+    public Integer getChildCount(@RequestParam Long parent_id){
+        return childService.GetChildCount(parent_id);
+    }
 
     @DeleteMapping("/delete/{childId}")
     public ResponseEntity<?> deleteChild(@PathVariable Long childId) {
@@ -67,7 +71,7 @@ public class ChildController {
     @GetMapping("/with-appointments/{parentId}")
     public ResponseEntity<?> getChildrenWithAppointments(@PathVariable Long parentId) {
         try {
-            List<Child> children = childService.getChildrenWithAppointments(parentId);
+            List<ChildDTO> children = childService.getChildrenWithAppointments(parentId);
             return ResponseEntity.ok().body(children);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error retrieving children with appointments.");

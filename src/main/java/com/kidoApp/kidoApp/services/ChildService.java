@@ -11,6 +11,7 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -70,9 +71,19 @@ public class ChildService {
     }
 
 
-    public List<Child> getChildrenWithAppointments(Long parentId) {
-        return childRepository.findByParentParentIdAndAppointmentIsNotNull(parentId);
+    public List<ChildDTO> getChildrenWithAppointments(Long parentId) {
+        List<Child> children=childRepository.findByParentParentIdAndAppointmentIsNotNull(parentId);
+        List<ChildDTO> childDTOs = new ArrayList<>();
+        for (Child child : children) {
+            ChildDTO childDTO = new ChildDTO(child);
+            childDTOs.add(childDTO);
+        }
+        return childDTOs;
     }
 
 
+    public Integer GetChildCount(Long parentId) {
+
+        return  childRepository.countByParent_ParentId(parentId);
+    }
 }

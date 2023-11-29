@@ -8,16 +8,16 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class HospitalDTO {
     private Long id;
-    private String name;
+    private String hospitalName;
     private String address;
-    private String phoneNumber;
+    private String phoneNo;
 
 
     public HospitalDTO(Hospital hospital) {
-        this.id = hospital.getHospital_id();
-        this.name = hospital.getHospitalName();
+        this.id = hospital.getHospitalId();
+        this.hospitalName = hospital.getHospitalName();
         this.address = hospital.getLocation();
-        this.phoneNumber = hospital.getPhoneNo();
+        this.phoneNo = hospital.getPhoneNo();
 
     }
 }

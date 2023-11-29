@@ -68,9 +68,9 @@ public class HospitalService {
 
     private HospitalDTO convertToDTO(Hospital hospital) {
         HospitalDTO hospitalDTO = new HospitalDTO();
-        hospitalDTO.setId(hospital.getHospital_id());
-        hospitalDTO.setName(hospital.getHospitalName());
-        // Set other properties if needed
+        hospitalDTO.setId(hospital.getHospitalId());
+        hospitalDTO.setHospitalName(hospital.getHospitalName());
         return hospitalDTO;
     }
+
 }

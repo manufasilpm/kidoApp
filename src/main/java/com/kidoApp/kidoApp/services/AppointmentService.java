@@ -1,5 +1,6 @@
 package com.kidoApp.kidoApp.services;
 
+import com.kidoApp.kidoApp.dto.APIResponseDTO;
 import com.kidoApp.kidoApp.dto.AppointmentRequestDTO;
 import com.kidoApp.kidoApp.model.Appointment;
 import com.kidoApp.kidoApp.model.Child;
@@ -31,36 +32,58 @@ public class AppointmentService {
     @Autowired
     private AppointmentRepository appointmentRepository;
 
-    public ResponseEntity<?>  addChildAppointment(Long childId, AppointmentRequestDTO appointmentRequest) {
-        try {
-            Child child = childRepository.findById(childId)
-                    .orElseThrow(() -> new EntityNotFoundException("Child not found"));
+    public void addChildAppointment(Long childId, AppointmentRequestDTO appointmentRequest) {
+        Child child = childRepository.findById(childId)
+                .orElseThrow(() -> new EntityNotFoundException("Child not found"));
 
-            Hospital hospital = hospitalRepository.findById(appointmentRequest.getHospitalId())
-                    .orElseThrow(() -> new EntityNotFoundException("Hospital not found"));
+        Hospital hospital = hospitalRepository.findById(appointmentRequest.getHospitalId())
+                .orElseThrow(() -> new EntityNotFoundException("Hospital not found"));
+        Vaccine vaccine = vaccineRepository.findById(appointmentRequest.getVaccineId())
+                .orElseThrow(() -> new EntityNotFoundException("Vaccine not found"));
 
-            Vaccine vaccine = vaccineRepository.findById(appointmentRequest.getVaccineId())
-                    .orElseThrow(() -> new EntityNotFoundException("Vaccine not found"));
+        Appointment appointment = new Appointment();
+        appointment.setChild(child);
+        child.setLatest_vaccine(appointmentRequest.getAppointmentDate());
+        appointment.setHospital(hospital);
+        appointment.setVaccine(vaccine);
+        appointment.setAppointmentDate(appointmentRequest.getAppointmentDate());
 
-            Appointment appointment = new Appointment();
-            appointment.setChild(child);
-            appointment.setHospital(hospital);
-            appointment.setVaccine(vaccine);
-            appointment.setAppointmentDate(appointmentRequest.getAppointmentDate());
+        Appointment savedAppointment = appointmentRepository.save(appointment);
 
-            // Set other appointment properties as needed
+        child.setAppointment(savedAppointment);
+        childRepository.save(child);
 
-            // Save the appointment
-            Appointment savedAppointment = appointmentRepository.save(appointment);
 
-            // Update the child with the appointment ID
-            child.setAppointment(savedAppointment);
-            childRepository.save(child);
 
-            return ResponseEntity.ok().body("Appointment added successfully.");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error adding appointment.");
-        }
+//        try {
+//            Child child = childRepository.findById(childId)
+//                    .orElseThrow(() -> new EntityNotFoundException("Child not found"));
+//
+//            Hospital hospital = hospitalRepository.findById(appointmentRequest.getHospitalId())
+//                    .orElseThrow(() -> new EntityNotFoundException("Hospital not found"));
+//            Vaccine vaccine = vaccineRepository.findById(appointmentRequest.getVaccineId())
+//                    .orElseThrow(() -> new EntityNotFoundException("Vaccine not found"));
+//            Appointment appointment = new Appointment();
+//            appointment.setChild(child);
+//            appointment.setHospital(hospital);
+//            appointment.setVaccine(vaccine);
+//            appointment.setAppointmentDate(appointmentRequest.getAppointmentDate());
+//
+//            Appointment savedAppointment = appointmentRepository.save(appointment);
+//
+//            child.setAppointment(savedAppointment);
+//            childRepository.save(child);
+//
+//            // Return the ResponseEntity with the success response
+//            return ResponseEntity.ok().body(new APIResponseDTO("Appointment added successfully."));
+//        } catch (EntityNotFoundException e) {
+//            // Return the ResponseEntity with the not found response
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new APIResponseDTO("Error: " + e.getMessage()));
+//        } catch (Exception e) {
+//            // Return the ResponseEntity with the internal server error response
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new APIResponseDTO("Error adding appointment: " + e.getMessage()));
+
     }
+
 
 }

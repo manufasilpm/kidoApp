@@ -16,4 +16,5 @@ public interface ChildRepository extends JpaRepository<Child,Long> {
     List<Child> findByParentParentIdAndAppointmentIsNotNull(Long parentId);
 
 
+    Integer countByParent_ParentId(Long parentId);
 }

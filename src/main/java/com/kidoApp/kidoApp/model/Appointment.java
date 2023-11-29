@@ -21,23 +21,16 @@ public class Appointment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    // Other fields
-
     @JsonBackReference
     @OneToOne
     @JoinColumn(name = "child_id")
     private Child child;
-
     @ManyToOne
     @JoinColumn(name = "hospital_id")
     private Hospital hospital;
-
     @ManyToOne
     @JoinColumn(name = "vaccine_id", nullable = false)
     private Vaccine vaccine;
-
-
     @Column(name = "appointment_date", nullable = false)
     private String appointmentDate;
 
