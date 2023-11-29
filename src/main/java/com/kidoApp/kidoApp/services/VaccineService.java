@@ -30,6 +30,7 @@ public class VaccineService {
         vaccine.setVaccineCategory(vaccineRequest.getVaccineCategory());
         vaccine.setCompany(vaccineRequest.getCompany());
         vaccine.setDescription(vaccineRequest.getDescription());
+        vaccine.setStatus(vaccineRequest.getStatus());
         // Set other vaccine properties as needed
 
         vaccineRepository.save(vaccine);
@@ -43,7 +44,7 @@ public class VaccineService {
         vaccine.setVaccineCategory(vaccineRequest.getVaccineCategory());
         vaccine.setCompany(vaccineRequest.getCompany());
         vaccine.setDescription(vaccineRequest.getDescription());
-
+        vaccine.setStatus(vaccineRequest.getStatus());
 
 
         vaccineRepository.save(vaccine);

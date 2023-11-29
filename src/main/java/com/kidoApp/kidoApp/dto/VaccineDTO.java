@@ -10,6 +10,7 @@ public class VaccineDTO {
     public String vaccineCategory;
     public String company;
     public String description;
+    public String status;
 
     public VaccineDTO(Vaccine vaccine) {
         this.id = vaccine.getVaccineId();
@@ -17,6 +18,7 @@ public class VaccineDTO {
         this.vaccineCategory=vaccine.getVaccineCategory();
         this.company=vaccine.company;
         this.description=vaccine.getDescription();
+        this.status=vaccine.getStatus();
 
         // Set other fields
     }

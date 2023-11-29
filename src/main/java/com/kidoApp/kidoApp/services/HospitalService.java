@@ -1,6 +1,5 @@
 package com.kidoApp.kidoApp.services;
 
-
 import com.kidoApp.kidoApp.Exception.ChildAlreadyExistsException;
 import com.kidoApp.kidoApp.Exception.HospitalPhoneNumberExistsException;
 import com.kidoApp.kidoApp.Exception.PhoneNumberAlreadyExistsException;
@@ -56,6 +55,7 @@ public class HospitalService {
 
         hospitalRepository.delete(hospital);
     }
+
     public List<HospitalDTO> getAllHospitals() {
         List<Hospital> hospitals = hospitalRepository.findAll();
         // Convert the list of Hospital entities to HospitalDTOs
@@ -65,11 +65,11 @@ public class HospitalService {
         return hospitalDTOs;
     }
 
-
     private HospitalDTO convertToDTO(Hospital hospital) {
-        HospitalDTO hospitalDTO = new HospitalDTO();
+        HospitalDTO hospitalDTO = new HospitalDTO(hospital);
         hospitalDTO.setId(hospital.getHospitalId());
         hospitalDTO.setHospitalName(hospital.getHospitalName());
+        // Set other properties if needed
         return hospitalDTO;
     }
 

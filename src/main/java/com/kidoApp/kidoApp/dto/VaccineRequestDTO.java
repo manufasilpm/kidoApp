@@ -10,5 +10,6 @@ public class VaccineRequestDTO {
     public String vaccineCategory;
     public String company;
     public String description;
-   
+    public String status;
+
 }

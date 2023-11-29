@@ -12,7 +12,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("Hospital")
@@ -21,12 +24,15 @@ public class HospitalController {
     private HospitalService hospitalService;
 
     @PostMapping("/add")
-    public ResponseEntity<?> addHospital(@RequestBody HospitalRequestDTO hospitalRequest) {
+    public ResponseEntity<Map<String, String>> addHospital(@RequestBody HospitalRequestDTO hospitalRequest) {
         try {
             hospitalService.addHospital(hospitalRequest);
-            return ResponseEntity.ok().body("Hospital added successfully.");
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "Hospital added successfully.");
+            return ResponseEntity.ok(response);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error adding hospital.");
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Collections.singletonMap("error", "Error adding parent."));
         }
     }
 
