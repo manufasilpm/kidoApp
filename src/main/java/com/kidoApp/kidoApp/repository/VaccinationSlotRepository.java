@@ -8,10 +8,10 @@ import java.util.List;
 
 
 public interface VaccinationSlotRepository extends JpaRepository<VaccinationSlot, Long> {
-    VaccinationSlot findByHospitalHospitalId(Long hospitalId);
-    // Add other methods if needed
+    VaccinationSlot findByHospitalHospitalIdAndDayOfWeek(Long hospitalId,String dayOfWeek);
 
-    List<VaccinationSlot> findDistinctByDayOfWeek(DayOfWeek dayOfWeek);
+
+    List<VaccinationSlot> findDistinctByDayOfWeek(String dayOfWeek);
 
 
 

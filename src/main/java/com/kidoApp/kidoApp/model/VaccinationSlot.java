@@ -34,9 +34,9 @@ public class VaccinationSlot {
     @JoinColumn(name = "hospital_id")  // Assuming this is the ID of the hospital
     private Hospital hospital;
 
-    @Enumerated(EnumType.STRING)
+
     @Column(name = "day_of_week")
-    private DayOfWeek dayOfWeek;
+    private String dayOfWeek;
 
 
 }

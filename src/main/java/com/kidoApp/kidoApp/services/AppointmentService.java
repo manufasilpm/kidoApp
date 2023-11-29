@@ -1,5 +1,6 @@
 package com.kidoApp.kidoApp.services;
 
+import com.kidoApp.kidoApp.constants.DayOfWeek;
 import com.kidoApp.kidoApp.dto.APIResponseDTO;
 import com.kidoApp.kidoApp.dto.AppointmentRequestDTO;
 import com.kidoApp.kidoApp.model.*;
@@ -10,7 +11,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
+
+import static com.kidoApp.kidoApp.constants.DayOfWeek.MONDAY;
 
 @Service
 public class AppointmentService {
@@ -35,10 +41,14 @@ public class AppointmentService {
 
         Hospital hospital = hospitalRepository.findById(appointmentRequest.getHospitalId())
                 .orElseThrow(() -> new EntityNotFoundException("Hospital not found"));
+
         Vaccine vaccine = vaccineRepository.findById(appointmentRequest.getVaccineId())
                 .orElseThrow(() -> new EntityNotFoundException("Vaccine not found"));
 
-        VaccinationSlot vaccinationSlot=vaccinationSlotRepository.findByHospitalHospitalId(appointmentRequest.getHospitalId());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE MMM dd yyyy HH:mm:ss z");
+        LocalDateTime dateTime =appointmentRequest.getAppointmentDate();
+        String dayOfWeek = DayOfWeek.valueOf(dateTime.getDayOfWeek().toString()).name();
+        VaccinationSlot vaccinationSlot=vaccinationSlotRepository.findByHospitalHospitalIdAndDayOfWeek(appointmentRequest.getHospitalId(),dayOfWeek);
         if (vaccinationSlot.getSlotCount() <= 0){
             throw new RuntimeException("Slot fully occupied");
 
@@ -53,10 +63,10 @@ public class AppointmentService {
         Appointment appointment = new Appointment();
         appointment.setChild(child);
 
-        child.setLatest_vaccine(appointmentRequest.getAppointmentDate());
+        child.setLatest_vaccine(appointmentRequest.getAppointmentDate().toString());
         appointment.setHospital(hospital);
         appointment.setVaccine(vaccine);
-        appointment.setAppointmentDate(appointmentRequest.getAppointmentDate());
+        appointment.setAppointmentDate(appointmentRequest.getAppointmentDate().toString());
 
         Appointment savedAppointment = appointmentRepository.save(appointment);
 

@@ -24,15 +24,15 @@ public class VaccinationSlotController {
     }
 
     @GetMapping("/hospitals-by-day")
-    public List<VaccinationSlot> getHospitalsByDay(@RequestParam DayOfWeek dayOfWeek) {
+    public List<VaccinationSlot> getHospitalsByDay(@RequestParam String dayOfWeek) {
         System.out.println(vaccinationSlotService.getHospitalsByDay(dayOfWeek));
         return vaccinationSlotService.getHospitalsByDay(dayOfWeek);
     }
 
     @PutMapping("/update")
-    public ResponseEntity<?> updateSlot(@RequestParam Long hospitalId, @RequestBody SlotRequestDTO slotRequestDTO) {
+    public ResponseEntity<?> updateSlot(@RequestParam Long hospitalId,@RequestParam String dayOfWeek, @RequestBody SlotRequestDTO slotRequestDTO) {
         try {
-            vaccinationSlotService.updateSlot(hospitalId, slotRequestDTO);
+            vaccinationSlotService.updateSlot(hospitalId, dayOfWeek,slotRequestDTO);
             return ResponseEntity.ok().body("Slot updated successfully.");
         } catch (EntityNotFoundException e) {
             return ResponseEntity.status(404).body("Slot not found.");

@@ -46,11 +46,11 @@ public class HospitalService {
 
         for (DayOfWeek dayOfWeek : DayOfWeek.values()) {
 
-            if (dayOfWeek != DayOfWeek.SATURDAY && dayOfWeek != DayOfWeek.SUNDAY) {
+
 
                 SlotRequestDTO slotRequest=new SlotRequestDTO(hospitalId,dayOfWeek.toString(),10L,"9","17");
                 vaccinationSlotService.addSlot(slotRequest);
-            }
+
         }
 
 

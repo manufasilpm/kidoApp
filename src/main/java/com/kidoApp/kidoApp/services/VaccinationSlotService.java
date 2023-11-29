@@ -27,7 +27,7 @@ public class VaccinationSlotService {
                 .orElseThrow(() -> new EntityNotFoundException("Hospital not found"));
         VaccinationSlot vaccinationSlot = new VaccinationSlot();
         vaccinationSlot.setHospital(hospital);
-        vaccinationSlot.setDayOfWeek(DayOfWeek.valueOf(day));
+        vaccinationSlot.setDayOfWeek(day);
         vaccinationSlot.setSlotCount(slotRequestDTO.getSlotCount());
         vaccinationSlot.setFromTime(slotRequestDTO.getFromTime());
         vaccinationSlot.setToTime(slotRequestDTO.getToTime());// Assuming 'day' is an enum value
@@ -37,7 +37,7 @@ public class VaccinationSlotService {
         vaccinationSlotRepository.save(vaccinationSlot);
     }
 
-    public List<VaccinationSlot> getHospitalsByDay(DayOfWeek dayOfWeek) {
+    public List<VaccinationSlot> getHospitalsByDay(String dayOfWeek) {
         try {
             return vaccinationSlotRepository.findDistinctByDayOfWeek(dayOfWeek);
         } catch (Exception e) {
@@ -47,8 +47,8 @@ public class VaccinationSlotService {
         }
     }
 
-    public void updateSlot(Long hospitalId, SlotRequestDTO slotRequestDTO) {
-        VaccinationSlot existingSlot = vaccinationSlotRepository.findByHospitalHospitalId(hospitalId);
+    public void updateSlot(Long hospitalId,String dayOfWeek, SlotRequestDTO slotRequestDTO) {
+        VaccinationSlot existingSlot = vaccinationSlotRepository.findByHospitalHospitalIdAndDayOfWeek(hospitalId,dayOfWeek);
 
 
         existingSlot.setSlotCount(slotRequestDTO.getSlotCount());
