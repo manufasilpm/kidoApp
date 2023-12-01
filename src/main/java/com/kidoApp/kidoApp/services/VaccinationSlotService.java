@@ -2,6 +2,7 @@ package com.kidoApp.kidoApp.services;
 
 import com.kidoApp.kidoApp.constants.DayOfWeek;
 import com.kidoApp.kidoApp.dto.SlotRequestDTO;
+import com.kidoApp.kidoApp.dto.SlotUpdateDto;
 import com.kidoApp.kidoApp.model.Hospital;
 import com.kidoApp.kidoApp.model.VaccinationSlot;
 import com.kidoApp.kidoApp.repository.HospitalRepository;
@@ -47,13 +48,13 @@ public class VaccinationSlotService {
         }
     }
 
-    public void updateSlot(Long hospitalId,String dayOfWeek, SlotRequestDTO slotRequestDTO) {
+    public void updateSlot(Long hospitalId,String dayOfWeek, SlotUpdateDto slotUpdateDto) {
         VaccinationSlot existingSlot = vaccinationSlotRepository.findByHospitalHospitalIdAndDayOfWeek(hospitalId,dayOfWeek);
 
 
-        existingSlot.setSlotCount(slotRequestDTO.getSlotCount());
-
-
+        existingSlot.setSlotCount(slotUpdateDto.getSlotCount());
+        existingSlot.setFromTime(slotUpdateDto.getFromTime());
+        existingSlot.setToTime(slotUpdateDto.getToTime());
         vaccinationSlotRepository.save(existingSlot);
     }
 

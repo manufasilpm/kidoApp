@@ -2,6 +2,7 @@ package com.kidoApp.kidoApp.controller;
 
 import com.kidoApp.kidoApp.constants.DayOfWeek;
 import com.kidoApp.kidoApp.dto.SlotRequestDTO;
+import com.kidoApp.kidoApp.dto.SlotUpdateDto;
 import com.kidoApp.kidoApp.model.VaccinationSlot;
 import com.kidoApp.kidoApp.services.VaccinationSlotService;
 import jakarta.persistence.EntityNotFoundException;
@@ -30,9 +31,9 @@ public class VaccinationSlotController {
     }
 
     @PutMapping("/update")
-    public ResponseEntity<?> updateSlot(@RequestParam Long hospitalId,@RequestParam String dayOfWeek, @RequestBody SlotRequestDTO slotRequestDTO) {
+    public ResponseEntity<?> updateSlot(@RequestParam Long hospitalId,@RequestParam String dayOfWeek, @RequestBody SlotUpdateDto slotUpdateDto) {
         try {
-            vaccinationSlotService.updateSlot(hospitalId, dayOfWeek,slotRequestDTO);
+            vaccinationSlotService.updateSlot(hospitalId, dayOfWeek, slotUpdateDto);
             return ResponseEntity.ok().body("Slot updated successfully.");
         } catch (EntityNotFoundException e) {
             return ResponseEntity.status(404).body("Slot not found.");
