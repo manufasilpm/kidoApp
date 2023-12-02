@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/appointments")
 
-public class AppointmentController{
+public class AppointmentController {
     @Autowired
     private AppointmentService appointmentService;
 
@@ -33,14 +33,6 @@ public class AppointmentController{
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new APIResponseDTO("Error adding appointment: " + e.getMessage()));
         }
     }
-
-
-//     try {
-//            childService.addChild(parentId, childRequest);
-//            return ResponseEntity.ok().body();
-//        } catch (Exception e) {
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("{\"error\": \"Error adding child.\"}");
-//        }
 
 
 }

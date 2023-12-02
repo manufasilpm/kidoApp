@@ -1,6 +1,5 @@
 package com.kidoApp.kidoApp.controller;
 
-import com.kidoApp.kidoApp.constants.DayOfWeek;
 import com.kidoApp.kidoApp.dto.SlotRequestDTO;
 import com.kidoApp.kidoApp.dto.SlotUpdateDto;
 import com.kidoApp.kidoApp.model.VaccinationSlot;
