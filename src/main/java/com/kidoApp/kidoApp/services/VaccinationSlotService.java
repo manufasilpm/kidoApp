@@ -47,6 +47,15 @@ public class VaccinationSlotService {
             throw new RuntimeException("Error fetching hospitals by day", e);
         }
     }
+    public List<VaccinationSlot> getSlotsByHospitalId(Long hospitalId) {
+        try {
+            return vaccinationSlotRepository.findByHospitalHospitalId(hospitalId);
+        } catch (Exception e) {
+            e.printStackTrace(); // Log the exception
+            // Handle the exception or rethrow as needed
+            throw new RuntimeException("Error fetching hospitals by day", e);
+        }
+    }
 
     public void updateSlot(Long hospitalId,String dayOfWeek, SlotUpdateDto slotUpdateDto) {
         VaccinationSlot existingSlot = vaccinationSlotRepository.findByHospitalHospitalIdAndDayOfWeek(hospitalId,dayOfWeek);

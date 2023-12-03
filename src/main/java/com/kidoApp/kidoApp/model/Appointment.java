@@ -40,6 +40,9 @@ public class Appointment {
     @Column(name = "appointment_date", nullable = false)
     private LocalDateTime appointmentDate;
 
+    @Column(name = "status")
+    private String status;
+
 
 
 }
