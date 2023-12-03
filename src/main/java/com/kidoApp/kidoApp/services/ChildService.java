@@ -3,16 +3,22 @@ package com.kidoApp.kidoApp.services;
 import com.kidoApp.kidoApp.Exception.ChildAlreadyExistsException;
 import com.kidoApp.kidoApp.dto.ChildDTO;
 import com.kidoApp.kidoApp.dto.ChildRequestDTO;
+import com.kidoApp.kidoApp.model.Appointment;
 import com.kidoApp.kidoApp.model.Child;
 import com.kidoApp.kidoApp.model.Parent;
+import com.kidoApp.kidoApp.repository.AppointmentRepository;
 import com.kidoApp.kidoApp.repository.ChildRepository;
 import com.kidoApp.kidoApp.repository.ParentRepository;
+import com.kidoApp.kidoApp.services.commonServices.AgeFinder;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ChildService {
@@ -23,7 +29,8 @@ public class ChildService {
     @Autowired
     private ParentRepository parentRepository; // Assuming you have a ChildRepository
 
-
+@Autowired
+private AppointmentRepository appointmentRepository;
 
     public void addChild(Long parentId, ChildRequestDTO childRequest) {
         Parent parent = parentRepository.findById(parentId)
@@ -33,10 +40,11 @@ public class ChildService {
             throw new ChildAlreadyExistsException("Child with the same name already exists for the parent.");
         }
         Child child = new Child();
-
+AgeFinder ageFinder=new AgeFinder();
         child.setChildName(childRequest.getName());
         child.setGender(childRequest.getGender());
         child.setDob(childRequest.getDob());
+        child.setAge(ageFinder.AgeFind(childRequest.getDob()));
         child.setCompleted_vaccine(childRequest.getCompleted_vaccine());
         child.setLatest_vaccine(childRequest.getLatest_vaccine());
 
@@ -85,5 +93,11 @@ public class ChildService {
     public Integer GetChildCount(Long parentId) {
 
         return  childRepository.countByParent_ParentId(parentId);
+    }
+
+
+    public Optional<Child> getAppointmentBychildId(Long ChildId) {
+
+        return  childRepository.findByChildIdAndAppointmentsIdIsNotNull(ChildId);
     }
 }

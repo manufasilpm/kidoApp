@@ -3,6 +3,7 @@ package com.kidoApp.kidoApp.controller;
 
 import com.kidoApp.kidoApp.dto.ChildDTO;
 import com.kidoApp.kidoApp.dto.ChildRequestDTO;
+import com.kidoApp.kidoApp.model.Appointment;
 import com.kidoApp.kidoApp.model.Child;
 import com.kidoApp.kidoApp.services.ChildService;
 import jakarta.persistence.EntityNotFoundException;
@@ -78,4 +79,12 @@ public class ChildController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error retrieving children with appointments.");
         }
     }
+
+    @GetMapping("appointment/childId")
+    public ResponseEntity<?> getAppointmentByChildId(@RequestParam Long childId){
+
+        return ResponseEntity.ok().body(childService.getAppointmentBychildId(childId));
+
+    }
+
 }

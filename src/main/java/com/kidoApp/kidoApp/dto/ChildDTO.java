@@ -13,6 +13,7 @@ public class ChildDTO {
     private String name;
     private String gender;
     private String dob;
+    private String Age;
     private String latest_vaccine;
     private String completed_vaccine;
 

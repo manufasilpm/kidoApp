@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ChildRepository extends JpaRepository<Child,Long> {
@@ -17,4 +18,7 @@ public interface ChildRepository extends JpaRepository<Child,Long> {
 
 
     Integer countByParent_ParentId(Long parentId);
+
+
+    Optional<Child> findByChildIdAndAppointmentsIdIsNotNull(Long childId);
 }

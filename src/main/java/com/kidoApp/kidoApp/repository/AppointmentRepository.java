@@ -24,5 +24,5 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
             "WHERE a.hospital.id = :hospitalId\n")
     List<AppointmentDetailsDTO> findByHospitalId(@Param("hospitalId") Long hospitalId);
 
-
+Appointment findByChildChildId(Long childId);
 }
