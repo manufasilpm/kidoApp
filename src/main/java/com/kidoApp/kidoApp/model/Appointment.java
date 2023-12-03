@@ -34,6 +34,9 @@ public class Appointment {
     @Column(name = "appointment_date", nullable = false)
     private String appointmentDate;
 
+    @Column(name = "status")
+    private String status;
+
 
 
 }
