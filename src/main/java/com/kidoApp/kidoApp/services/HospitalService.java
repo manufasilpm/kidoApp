@@ -48,7 +48,7 @@ public class HospitalService {
 
 
 
-                SlotRequestDTO slotRequest=new SlotRequestDTO(hospitalId,dayOfWeek.toString(),10L,"9","17");
+                SlotRequestDTO slotRequest=new SlotRequestDTO(hospitalId,dayOfWeek.toString(),100L,"9AM","9PM");
                 vaccinationSlotService.addSlot(slotRequest);
 
         }

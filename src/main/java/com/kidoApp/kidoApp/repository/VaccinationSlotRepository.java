@@ -15,6 +15,7 @@ public interface VaccinationSlotRepository extends JpaRepository<VaccinationSlot
     List<VaccinationSlot> findDistinctByDayOfWeek(String dayOfWeek);
 
 
+    List<VaccinationSlot> findByHospitalHospitalId(Long hospitalId);
 
 
 }

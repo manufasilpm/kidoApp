@@ -77,6 +77,17 @@ public class VaccineController {
     }
 
 
+    @GetMapping("/vaccineByAge/{age}")
+    public ResponseEntity<?> getVaccineByAge(@PathVariable String age){
+        try{
+            List<Vaccine> vaccines=vaccineService.getVaccineByAge(age);
+            return ResponseEntity.ok().body(vaccines);
+
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error in retrieving Vaccines ");
+        }
+    }
+
     @GetMapping("/all")
     public ResponseEntity<?> getAll(){
         try{

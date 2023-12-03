@@ -65,4 +65,7 @@ public class VaccineService {
     public List<Vaccine> getAllVaccines() {
         return vaccineRepository.findAll();
     }
+    public List<Vaccine> getVaccineByAge(String age) {
+        return vaccineRepository.findByVaccineCategory(age);
+    }
 }
