@@ -17,7 +17,7 @@ import java.time.LocalTime;
 public class VaccinationSlot {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "slot_id")
     private Long slotId;
 

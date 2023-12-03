@@ -15,14 +15,15 @@ import java.util.List;
 public interface AppointmentRepository extends JpaRepository<Appointment, Long> {
 
 
-    @Query("SELECT new com.kidoApp.kidoApp.dto.AppointmentDetailsDTO(\n" +
-            "    a.id, \n" +
-            "    new com.kidoApp.kidoApp.dto.ChildDTO(a.child), \n" +
-            "    a.appointmentDate\n" +
-            ")\n" +
-            "FROM Appointment a\n" +
-            "WHERE a.hospital.id = :hospitalId\n")
-    List<AppointmentDetailsDTO> findByHospitalId(@Param("hospitalId") Long hospitalId);
+//    @Query("SELECT new com.kidoApp.kidoApp.model.Appointment(\n" +
+//            "    a.id, \n" +
+//            "    new com.kidoApp.kidoApp.dto.ChildDTO(a.child), \n" +
+//            "    a.appointmentDate, \n" +
+//            "    a.status\n" +
+//            ")\n" +
+//            "FROM Appointment a\n" +
+//            "WHERE a.hospital.id = :hospitalId")
+    List<Appointment> findByHospitalHospitalId( Long hospitalId);
 
 Appointment findByChildChildId(Long childId);
 }

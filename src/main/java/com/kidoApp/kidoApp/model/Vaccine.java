@@ -14,7 +14,7 @@ import java.util.List;
 public class Vaccine {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "vaccine_id")
     public  Long vaccineId;
 

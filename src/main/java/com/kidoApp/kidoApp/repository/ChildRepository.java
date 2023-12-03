@@ -21,4 +21,7 @@ public interface ChildRepository extends JpaRepository<Child,Long> {
 
 
     Optional<Child> findByChildIdAndAppointmentsIdIsNotNull(Long childId);
+
+    @Query("SELECT c.parent.email FROM Child c WHERE c.childId = :childId")
+    String findParentEmailByChildId(@Param("childId") Long childId);
 }

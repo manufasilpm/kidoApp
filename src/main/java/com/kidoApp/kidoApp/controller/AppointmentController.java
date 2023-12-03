@@ -35,8 +35,8 @@ public class AppointmentController {
         }
     }
     @PostMapping("/sedNotification")
-    public void sendNotification() throws MessagingException {
-        appointmentService.sendEmailNotification();
+    public void sendNotification(@RequestParam Long childId) throws MessagingException {
+        appointmentService.sendEmailNotification(childId);
     }
 
 }

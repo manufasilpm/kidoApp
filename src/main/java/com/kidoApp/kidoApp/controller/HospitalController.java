@@ -86,7 +86,7 @@ public class HospitalController {
     }
     @GetMapping("/allAppointment")
     public ResponseEntity<?> getAllAppointments(@RequestParam Long hospitalId){
-        List<AppointmentDetailsDTO> appointments= appointmentService.getAppointmentsByHospitalId(hospitalId);
+        List<Appointment> appointments= appointmentService.getAppointmentsByHospitalId(hospitalId);
 
         return ResponseEntity.ok().body(appointments);
     }

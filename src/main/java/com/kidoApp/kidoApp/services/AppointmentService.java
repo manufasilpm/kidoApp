@@ -115,8 +115,9 @@ public class AppointmentService {
 ////    public void sendEmailNotification(Long hospitalId, Long childId, String appointmentDate) {
 ////    }
 
-    public void sendEmailNotification() throws MessagingException {
-        emailService.sendNotificationEmail("manufasilpm@gmail.com","vaccine","hey");
+    public void sendEmailNotification(Long childId) throws MessagingException {
+        String email=childRepository.findParentEmailByChildId(childId);
+        emailService.sendNotificationEmail(email,"vaccine","hey");
     }
 
 
@@ -125,7 +126,7 @@ public class AppointmentService {
 
 
 
-    public List<AppointmentDetailsDTO> getAppointmentsByHospitalId(Long hospitalId) {
-        return appointmentRepository.findByHospitalId(hospitalId);
+    public List<Appointment> getAppointmentsByHospitalId(Long hospitalId) {
+        return appointmentRepository.findByHospitalHospitalId(hospitalId);
     }
 }

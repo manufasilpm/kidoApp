@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 public class VaccineRequest {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(name = "vaccine_name")

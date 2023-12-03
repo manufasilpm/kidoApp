@@ -27,14 +27,3 @@ public class AdminController {
 
 
 }
-// @GetMapping("/{childId}")
-//    public ResponseEntity<?> getChild(@PathVariable Long childId) {
-//        try {
-//            ChildDTO childDTO = childService.getChild(childId);
-//            return ResponseEntity.ok().body(childDTO);
-//        } catch (EntityNotFoundException e) {
-//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Child not found.");
-//        } catch (Exception e) {
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error retrieving child.");
-//        }
-//    }
