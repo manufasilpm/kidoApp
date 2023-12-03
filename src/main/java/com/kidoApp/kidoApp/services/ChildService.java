@@ -72,7 +72,7 @@ public class ChildService {
 
 
     public List<ChildDTO> getChildrenWithAppointments(Long parentId) {
-        List<Child> children=childRepository.findByParentParentIdAndAppointmentIsNotNull(parentId);
+        List<Child> children=childRepository.findByParentParentIdAndAppointmentsIsNotNull(parentId);
         List<ChildDTO> childDTOs = new ArrayList<>();
         for (Child child : children) {
             ChildDTO childDTO = new ChildDTO(child);

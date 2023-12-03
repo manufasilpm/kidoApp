@@ -4,6 +4,7 @@ import com.kidoApp.kidoApp.dto.APIResponseDTO;
 import com.kidoApp.kidoApp.dto.AppointmentRequestDTO;
 import com.kidoApp.kidoApp.dto.AppointmentResponseDTO;
 import com.kidoApp.kidoApp.services.AppointmentService;
+import jakarta.mail.MessagingException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,6 +34,9 @@ public class AppointmentController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new APIResponseDTO("Error adding appointment: " + e.getMessage()));
         }
     }
-
+    @PostMapping("/sedNotification")
+    public void sendNotification() throws MessagingException {
+        appointmentService.sendEmailNotification();
+    }
 
 }

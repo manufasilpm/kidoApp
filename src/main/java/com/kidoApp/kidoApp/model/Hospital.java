@@ -34,7 +34,7 @@ public class Hospital {
     private   String password;
 
     @OneToMany(mappedBy = "hospital", cascade = CascadeType.ALL)
-   @JsonBackReference
+    @JsonBackReference
     private List<VaccinationSlot> vaccinationSlots;
 
     @OneToMany(targetEntity = Vaccine.class, cascade = CascadeType.ALL)

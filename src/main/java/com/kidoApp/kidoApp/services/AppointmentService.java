@@ -2,9 +2,11 @@ package com.kidoApp.kidoApp.services;
 
 import com.kidoApp.kidoApp.constants.DayOfWeek;
 import com.kidoApp.kidoApp.dto.APIResponseDTO;
+import com.kidoApp.kidoApp.dto.AppointmentDetailsDTO;
 import com.kidoApp.kidoApp.dto.AppointmentRequestDTO;
 import com.kidoApp.kidoApp.model.*;
 import com.kidoApp.kidoApp.repository.*;
+import jakarta.mail.MessagingException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,6 +33,8 @@ public class AppointmentService {
 
     @Autowired
     private VaccinationSlotRepository vaccinationSlotRepository;
+    @Autowired
+    private EmailService emailService;
 
     @Autowired
     private AppointmentRepository appointmentRepository;
@@ -66,16 +70,62 @@ public class AppointmentService {
         child.setLatest_vaccine(appointmentRequest.getAppointmentDate().toString());
         appointment.setHospital(hospital);
         appointment.setVaccine(vaccine);
-        appointment.setAppointmentDate(appointmentRequest.getAppointmentDate().toString());
+        appointment.setAppointmentDate(appointmentRequest.getAppointmentDate());
 
         Appointment savedAppointment = appointmentRepository.save(appointment);
 
-        child.setAppointment(savedAppointment);
+        child.setAppointments(savedAppointment);
         childRepository.save(child);
     }
 
 
     public List<Appointment> getAllAppointments() {
         return appointmentRepository.findAll();
+    }
+
+
+
+
+    // Other dependencies and methods...
+
+//    public void sendEmailNotification(Long childId, AppointmentRequestDTO appointmentRequest) {
+//        // Save the appointment...
+//
+//        // Fetch parent's email
+//        String parentEmail = getParentEmailByChildId(childId);
+//
+//        // Compose email content
+//        String subject = "Appointment Notification";
+//        String content = "Your child has a new appointment on " + appointmentRequest.getAppointmentDate() + ". Details...";
+//
+//        // Send email notification
+//        try {
+//            emailService.sendNotificationEmail(parentEmail, subject, content);
+//        } catch (MessagingException e) {
+//            // Handle email sending exception
+//            e.printStackTrace();
+//        }
+//
+//
+//    }
+//    private String getParentEmailByChildId(Long childId) {
+//        return "parent@example.com";
+//    }
+//
+////    public void sendEmailNotification(Long hospitalId, Long childId, String appointmentDate) {
+////    }
+
+    public void sendEmailNotification() throws MessagingException {
+        emailService.sendNotificationEmail("manufasilpm@gmail.com","vaccine","hey");
+    }
+
+
+
+
+
+
+
+    public List<AppointmentDetailsDTO> getAppointmentsByHospitalId(Long hospitalId) {
+        return appointmentRepository.findByHospitalId(hospitalId);
     }
 }

@@ -27,10 +27,8 @@ public class Vaccine {
     @Column(name = "company")
     public String company;
 
-
     @Column(name = "description")
     public String description;
-
 
     @Column(name = "status")
     public String status;

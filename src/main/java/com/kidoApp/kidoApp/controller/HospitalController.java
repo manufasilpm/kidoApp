@@ -1,9 +1,12 @@
 package com.kidoApp.kidoApp.controller;
 
+import com.kidoApp.kidoApp.dto.AppointmentDetailsDTO;
 import com.kidoApp.kidoApp.dto.HospitalDTO;
 import com.kidoApp.kidoApp.dto.HospitalRequestDTO;
+import com.kidoApp.kidoApp.model.Appointment;
 import com.kidoApp.kidoApp.model.Hospital;
 import com.kidoApp.kidoApp.model.Parent;
+import com.kidoApp.kidoApp.services.AppointmentService;
 import com.kidoApp.kidoApp.services.HospitalService;
 import com.kidoApp.kidoApp.services.ParentService;
 import jakarta.persistence.EntityNotFoundException;
@@ -22,6 +25,9 @@ import java.util.Map;
 public class HospitalController {
     @Autowired
     private HospitalService hospitalService;
+
+    @Autowired
+    AppointmentService appointmentService;
 
     @PostMapping("/add")
     public ResponseEntity<Map<String, String>> addHospital(@RequestBody HospitalRequestDTO hospitalRequest) {
@@ -77,5 +83,11 @@ public class HospitalController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error retrieving hospitals.");
         }
+    }
+    @GetMapping("/allAppointment")
+    public ResponseEntity<?> getAllAppointments(@RequestParam Long hospitalId){
+        List<AppointmentDetailsDTO> appointments= appointmentService.getAppointmentsByHospitalId(hospitalId);
+
+        return ResponseEntity.ok().body(appointments);
     }
 }

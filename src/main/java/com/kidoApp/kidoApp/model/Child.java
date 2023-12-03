@@ -1,5 +1,6 @@
 package com.kidoApp.kidoApp.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,23 +28,21 @@ public class Child {
     @Column(name = "dob")
     private String dob;
 
+    @Column(name="age")
+    private String age;
+
     @Column(name = "latest_vaccine")
     private String latest_vaccine;
     @Column(name = "completed_vaccine")
     private String completed_vaccine;
 
-
     @ManyToOne
     @JoinColumn(name = "parent_id")
     private Parent parent;
 
-
-
-    @OneToOne
-    @JoinColumn(name = "appoiment_id")
-    private Appointment appointment;
-
-
+    @OneToOne(mappedBy = "child")
+    @JsonBackReference // Add this line
+    private Appointment appointments;
 
 
 }

@@ -13,7 +13,7 @@ import java.util.List;
 public interface ChildRepository extends JpaRepository<Child,Long> {
     boolean existsByChildNameAndParent(String name, Parent parent);
 
-    List<Child> findByParentParentIdAndAppointmentIsNotNull(Long parentId);
+    List<Child> findByParentParentIdAndAppointmentsIsNotNull(Long parentId);
 
 
     Integer countByParent_ParentId(Long parentId);
