@@ -120,12 +120,6 @@ public class AppointmentService {
         emailService.sendNotificationEmail(email,"vaccine","hey");
     }
 
-
-
-
-
-
-
     public List<Appointment> getAppointmentsByHospitalId(Long hospitalId) {
         return appointmentRepository.findByHospitalHospitalId(hospitalId);
     }

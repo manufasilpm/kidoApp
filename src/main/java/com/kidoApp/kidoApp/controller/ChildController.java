@@ -3,6 +3,7 @@ package com.kidoApp.kidoApp.controller;
 
 import com.kidoApp.kidoApp.dto.ChildDTO;
 import com.kidoApp.kidoApp.dto.ChildRequestDTO;
+import com.kidoApp.kidoApp.dto.ChildWithAppointmentDTO;
 import com.kidoApp.kidoApp.model.Appointment;
 import com.kidoApp.kidoApp.model.Child;
 import com.kidoApp.kidoApp.services.ChildService;
@@ -73,7 +74,7 @@ public class ChildController {
     @GetMapping("/with-appointments/{parentId}")
     public ResponseEntity<?> getChildrenWithAppointments(@PathVariable Long parentId) {
         try {
-            List<ChildDTO> children = childService.getChildrenWithAppointments(parentId);
+            List<ChildWithAppointmentDTO> children = childService.getChildrenWithAppointments(parentId);
             return ResponseEntity.ok().body(children);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error retrieving children with appointments.");

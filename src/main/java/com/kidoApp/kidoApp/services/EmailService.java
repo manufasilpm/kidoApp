@@ -17,8 +17,7 @@ public class EmailService {
     }
 
     public void sendNotificationEmail(String to, String subject, String content) throws MessagingException {
-//        MimeMessage message = javaMailSender.createMimeMessage();
-//        MimeMessageHelper helper = new MimeMessageHelper(message, true);
+
 
         SimpleMailMessage message =new SimpleMailMessage();
         message.setFrom("abc@gmail.com");
@@ -26,9 +25,7 @@ public class EmailService {
         message.setSubject(subject);
         message.setText(content);
 
-//        helper.setTo(to);
-//        helper.setSubject(subject);
-//        helper.setText(content, true);
+
 
         javaMailSender.send(message);
 

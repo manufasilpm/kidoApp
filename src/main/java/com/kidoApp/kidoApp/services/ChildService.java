@@ -3,6 +3,7 @@ package com.kidoApp.kidoApp.services;
 import com.kidoApp.kidoApp.Exception.ChildAlreadyExistsException;
 import com.kidoApp.kidoApp.dto.ChildDTO;
 import com.kidoApp.kidoApp.dto.ChildRequestDTO;
+import com.kidoApp.kidoApp.dto.ChildWithAppointmentDTO;
 import com.kidoApp.kidoApp.model.Appointment;
 import com.kidoApp.kidoApp.model.Child;
 import com.kidoApp.kidoApp.model.Parent;
@@ -79,11 +80,11 @@ AgeFinder ageFinder=new AgeFinder();
     }
 
 
-    public List<ChildDTO> getChildrenWithAppointments(Long parentId) {
+    public List<ChildWithAppointmentDTO> getChildrenWithAppointments(Long parentId) {
         List<Child> children=childRepository.findByParentParentIdAndAppointmentsIsNotNull(parentId);
-        List<ChildDTO> childDTOs = new ArrayList<>();
+        List<ChildWithAppointmentDTO> childDTOs = new ArrayList<>();
         for (Child child : children) {
-            ChildDTO childDTO = new ChildDTO(child);
+            ChildWithAppointmentDTO childDTO = new ChildWithAppointmentDTO(child);
             childDTOs.add(childDTO);
         }
         return childDTOs;
